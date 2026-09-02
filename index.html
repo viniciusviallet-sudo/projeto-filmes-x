@@ -25,7 +25,6 @@
       margin: 0 auto;
     }
 
-    /* cabeçalho — fusão IMDb + Rotten */
     .header {
       display: flex;
       flex-wrap: wrap;
@@ -88,7 +87,6 @@
       color: #4caf50;
     }
 
-    /* filtros / search */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -162,7 +160,6 @@
       font-size: 0.8rem;
     }
 
-    /* grade de filmes */
     .movie-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -209,12 +206,6 @@
 
     .movie-card:hover .poster img {
       transform: scale(1.03);
-    }
-
-    .poster .placeholder-icon {
-      font-size: 3.2rem;
-      color: #b6c5db;
-      opacity: 0.6;
     }
 
     .movie-info {
@@ -344,7 +335,6 @@
       margin-right: 4px;
     }
 
-    /* selo destaque */
     .cert {
       background: #1e2f46;
       color: white;
@@ -373,7 +363,6 @@
       margin: 0 6px;
     }
 
-    /* responsividade */
     @media (max-width: 700px) {
       .header {
         flex-direction: column;
@@ -401,7 +390,6 @@
 <body>
 <div class="container">
 
-  <!-- Cabeçalho fusão -->
   <header class="header">
     <div class="logo">
       <i class="fas fa-film"></i>
@@ -414,7 +402,6 @@
     </div>
   </header>
 
-  <!-- Filtros / search -->
   <div class="filters">
     <div class="search-box">
       <i class="fas fa-search"></i>
@@ -428,7 +415,6 @@
     </div>
   </div>
 
-  <!-- Grade de filmes (estilo IMDb + Rotten) -->
   <div class="movie-grid">
 
     <!-- Filme 1: Duna: Parte 2 -->
@@ -639,7 +625,7 @@
       </div>
     </div>
 
-  </div> <!-- fim grid -->
+  </div>
 
   <div class="footer-note">
     <span><i class="fas fa-tomato"></i> Tomatômetro • 97% Fresh</span>
@@ -648,6 +634,6 @@
     <span><i class="fas fa-film"></i> CinemaScore © 2026</span>
   </div>
 
-</div> <!-- container -->
+</div>
 </body>
 </html>
