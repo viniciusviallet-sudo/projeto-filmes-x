@@ -145,8 +145,13 @@
       font-size: 0.9rem;
       color: #3f4e66;
       transition: all 0.15s;
-      cursor: default;
+      cursor: pointer;
       background: #eef2f8;
+    }
+
+    .filter-tabs .tab:hover {
+      background: #dce3ef;
+      transform: translateY(-1px);
     }
 
     .filter-tabs .tab.active {
@@ -172,10 +177,16 @@
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 20, 40, 0.02);
-      transition: transform 0.2s ease, box-shadow 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s, opacity 0.3s ease;
       border: 1px solid #f0f2f8;
       display: flex;
       flex-direction: column;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .movie-card.hidden {
+      display: none;
     }
 
     .movie-card:hover {
@@ -346,6 +357,19 @@
       text-transform: uppercase;
     }
 
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: #8596af;
+      font-size: 1.2rem;
+      grid-column: 1 / -1;
+      display: none;
+    }
+
+    .no-results.show {
+      display: block;
+    }
+
     .footer-note {
       margin-top: 3.5rem;
       text-align: center;
@@ -405,226 +429,23 @@
   <div class="filters">
     <div class="search-box">
       <i class="fas fa-search"></i>
-      <input type="text" placeholder="Pesquisar filmes, séries, atores..." value="Duna">
+      <input type="text" id="searchInput" placeholder="Pesquisar filmes, séries, atores...">
     </div>
     <div class="filter-tabs">
-      <span class="tab active"><i class="fas fa-fire"></i> Popular</span>
-      <span class="tab"><i class="fas fa-star"></i> Nota</span>
-      <span class="tab"><i class="fas fa-tomato"></i> Tomatômetro</span>
-      <span class="tab"><i class="fas fa-calendar-alt"></i> Lançamentos</span>
+      <span class="tab active" data-filter="all"><i class="fas fa-fire"></i> Todos</span>
+      <span class="tab" data-filter="imdb"><i class="fas fa-star"></i> Nota</span>
+      <span class="tab" data-filter="tomato"><i class="fas fa-tomato"></i> Tomatômetro</span>
+      <span class="tab" data-filter="year"><i class="fas fa-calendar-alt"></i> Lançamentos</span>
     </div>
   </div>
 
-  <div class="movie-grid">
+  <div class="movie-grid" id="movieGrid">
+    <!-- Os filmes serão renderizados via JavaScript -->
+  </div>
 
-    <!-- Filme 1: Duna: Parte 2 -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/8B8t8Pw1YI3Xb5vK6nV2iG7xqoF.jpg" alt="Duna: Parte 2" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Duna: Parte 2
-          <span class="movie-year">2024</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 8.9</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 94%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-star"></i> 4.5</span>
-        </div>
-        <div class="movie-desc">Paul Atreides continua sua jornada em Arrakis, unindo-se com os Fremen para vingar sua família.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 2h 46min</span>
-          <span><i class="fas fa-tag"></i> Ação, Sci-Fi</span>
-          <span class="cert">+14</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 2: Oppenheimer -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Oppenheimer" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Oppenheimer
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 8.4</span>
-            <span class="score-tomato"><i class="fas fa-tomato"></i> 93%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-tomato"></i> Certified Fresh</span>
-        </div>
-        <div class="movie-desc">A história do físico J. Robert Oppenheimer e seu papel no desenvolvimento da bomba atômica.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 3h 01min</span>
-          <span><i class="fas fa-tag"></i> Drama, História</span>
-          <span class="cert">+16</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 3: Barbie -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg" alt="Barbie" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Barbie
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 7.1</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 88%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-star"></i> 4.0</span>
-        </div>
-        <div class="movie-desc">Barbie e Ken vivem em um mundo perfeito, até que uma crise existencial os leva à realidade.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 1h 54min</span>
-          <span><i class="fas fa-tag"></i> Comédia, Aventura</span>
-          <span class="cert">Livre</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 4: Poor Things -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg" alt="Pobres Criaturas" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Pobres Criaturas
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 8.0</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 92%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-tomato"></i> 94%</span>
-        </div>
-        <div class="movie-desc">A jovem Bella Baxter é trazida de volta à vida por um cientista e embarca em uma jornada de autodescoberta.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 2h 21min</span>
-          <span><i class="fas fa-tag"></i> Romance, Sci-Fi</span>
-          <span class="cert">+18</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 5: Godzilla Minus One -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/hkxxMIGaiCTmrEArK7J56JT8I9l.jpg" alt="Godzilla Minus One" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Godzilla Minus One
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 8.3</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 98%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-star"></i> 4.6</span>
-        </div>
-        <div class="movie-desc">No Japão pós-guerra, Godzilla surge e ameaça devastar o país, forçando heróis improváveis a agir.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 2h 05min</span>
-          <span><i class="fas fa-tag"></i> Ação, Ficção</span>
-          <span class="cert">+12</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 6: Furiosa -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/iADOJ8ZymEk2Pr6PuGdgoJzQf6b.jpg" alt="Furiosa: Uma Saga Mad Max" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          Furiosa: Uma Saga Mad Max
-          <span class="movie-year">2024</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 7.8</span>
-            <span class="score-tomato"><i class="fas fa-tomato"></i> 87%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-tomato"></i> Fresh</span>
-        </div>
-        <div class="movie-desc">A origem de Furiosa, antes de encontrar Max, em um mundo pós-apocalíptico dominado pela guerra.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 2h 28min</span>
-          <span><i class="fas fa-tag"></i> Ação, Aventura</span>
-          <span class="cert">+16</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 7: A Zona de Interesse -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/6fTbHGn7iF1enJzGp2h5vQ8q5nE.jpg" alt="A Zona de Interesse" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          A Zona de Interesse
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 7.6</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 93%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-star"></i> 4.2</span>
-        </div>
-        <div class="movie-desc">O comandante de Auschwitz e sua família constroem uma vida idílica ao lado do campo de concentração.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 1h 45min</span>
-          <span><i class="fas fa-tag"></i> Drama, História</span>
-          <span class="cert">+16</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filme 8: O Menino e a Garça -->
-    <div class="movie-card">
-      <div class="poster">
-        <img src="https://image.tmdb.org/t/p/w500/4bK7wYhDq5qL1xJZ3q8WcN2xY6M.jpg" alt="O Menino e a Garça" loading="lazy">
-      </div>
-      <div class="movie-info">
-        <div class="movie-title">
-          O Menino e a Garça
-          <span class="movie-year">2023</span>
-        </div>
-        <div class="movie-meta">
-          <div class="score-group">
-            <span class="score-imdb"><i class="fas fa-star"></i> 7.5</span>
-            <span class="score-tomato fresh"><i class="fas fa-seedling"></i> 97%</span>
-          </div>
-          <span class="critic-badge"><i class="fas fa-tomato"></i> 96%</span>
-        </div>
-        <div class="movie-desc">Um menino em luto descobre um mundo fantástico habitado por criaturas mágicas e uma garça cinzenta.</div>
-        <div class="movie-extra">
-          <span><i class="far fa-clock"></i> 2h 04min</span>
-          <span><i class="fas fa-tag"></i> Animação, Fantasia</span>
-          <span class="cert">Livre</span>
-        </div>
-      </div>
-    </div>
-
+  <div class="no-results" id="noResults">
+    <i class="fas fa-film" style="font-size: 2rem; display: block; margin-bottom: 1rem;"></i>
+    Nenhum filme encontrado para esta busca.
   </div>
 
   <div class="footer-note">
@@ -635,5 +456,239 @@
   </div>
 
 </div>
+
+<script>
+  // Dados dos filmes
+  const movies = [
+    {
+      id: 1,
+      title: "Duna: Parte 2",
+      year: 2024,
+      imdb: 8.9,
+      tomato: 94,
+      tomatoFresh: true,
+      critic: "4.5",
+      criticType: "star",
+      description: "Paul Atreides continua sua jornada em Arrakis, unindo-se com os Fremen para vingar sua família.",
+      duration: "2h 46min",
+      genre: "Ação, Sci-Fi",
+      cert: "+14",
+      poster: "https://image.tmdb.org/t/p/w500/8B8t8Pw1YI3Xb5vK6nV2iG7xqoF.jpg"
+    },
+    {
+      id: 2,
+      title: "Oppenheimer",
+      year: 2023,
+      imdb: 8.4,
+      tomato: 93,
+      tomatoFresh: false,
+      critic: "Certified Fresh",
+      criticType: "tomato",
+      description: "A história do físico J. Robert Oppenheimer e seu papel no desenvolvimento da bomba atômica.",
+      duration: "3h 01min",
+      genre: "Drama, História",
+      cert: "+16",
+      poster: "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+    },
+    {
+      id: 3,
+      title: "Barbie",
+      year: 2023,
+      imdb: 7.1,
+      tomato: 88,
+      tomatoFresh: true,
+      critic: "4.0",
+      criticType: "star",
+      description: "Barbie e Ken vivem em um mundo perfeito, até que uma crise existencial os leva à realidade.",
+      duration: "1h 54min",
+      genre: "Comédia, Aventura",
+      cert: "Livre",
+      poster: "https://image.tmdb.org/t/p/w500/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg"
+    },
+    {
+      id: 4,
+      title: "Pobres Criaturas",
+      year: 2023,
+      imdb: 8.0,
+      tomato: 92,
+      tomatoFresh: true,
+      critic: "94%",
+      criticType: "tomato",
+      description: "A jovem Bella Baxter é trazida de volta à vida por um cientista e embarca em uma jornada de autodescoberta.",
+      duration: "2h 21min",
+      genre: "Romance, Sci-Fi",
+      cert: "+18",
+      poster: "https://image.tmdb.org/t/p/w500/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg"
+    },
+    {
+      id: 5,
+      title: "Godzilla Minus One",
+      year: 2023,
+      imdb: 8.3,
+      tomato: 98,
+      tomatoFresh: true,
+      critic: "4.6",
+      criticType: "star",
+      description: "No Japão pós-guerra, Godzilla surge e ameaça devastar o país, forçando heróis improváveis a agir.",
+      duration: "2h 05min",
+      genre: "Ação, Ficção",
+      cert: "+12",
+      poster: "https://image.tmdb.org/t/p/w500/hkxxMIGaiCTmrEArK7J56JT8I9l.jpg"
+    },
+    {
+      id: 6,
+      title: "Furiosa: Uma Saga Mad Max",
+      year: 2024,
+      imdb: 7.8,
+      tomato: 87,
+      tomatoFresh: false,
+      critic: "Fresh",
+      criticType: "tomato",
+      description: "A origem de Furiosa, antes de encontrar Max, em um mundo pós-apocalíptico dominado pela guerra.",
+      duration: "2h 28min",
+      genre: "Ação, Aventura",
+      cert: "+16",
+      poster: "https://image.tmdb.org/t/p/w500/iADOJ8ZymEk2Pr6PuGdgoJzQf6b.jpg"
+    },
+    {
+      id: 7,
+      title: "A Zona de Interesse",
+      year: 2023,
+      imdb: 7.6,
+      tomato: 93,
+      tomatoFresh: true,
+      critic: "4.2",
+      criticType: "star",
+      description: "O comandante de Auschwitz e sua família constroem uma vida idílica ao lado do campo de concentração.",
+      duration: "1h 45min",
+      genre: "Drama, História",
+      cert: "+16",
+      poster: "https://image.tmdb.org/t/p/w500/6fTbHGn7iF1enJzGp2h5vQ8q5nE.jpg"
+    },
+    {
+      id: 8,
+      title: "O Menino e a Garça",
+      year: 2023,
+      imdb: 7.5,
+      tomato: 97,
+      tomatoFresh: true,
+      critic: "96%",
+      criticType: "tomato",
+      description: "Um menino em luto descobre um mundo fantástico habitado por criaturas mágicas e uma garça cinzenta.",
+      duration: "2h 04min",
+      genre: "Animação, Fantasia",
+      cert: "Livre",
+      poster: "https://image.tmdb.org/t/p/w500/4bK7wYhDq5qL1xJZ3q8WcN2xY6M.jpg"
+    }
+  ];
+
+  // Estado atual
+  let currentFilter = 'all';
+  let currentSearch = '';
+
+  // Referências DOM
+  const grid = document.getElementById('movieGrid');
+  const searchInput = document.getElementById('searchInput');
+  const noResults = document.getElementById('noResults');
+  const tabs = document.querySelectorAll('.tab');
+
+  // Função para criar o HTML de um filme
+  function createMovieCard(movie) {
+    const tomatoClass = movie.tomatoFresh ? 'fresh' : '';
+    const tomatoIcon = movie.tomatoFresh ? 'fa-seedling' : 'fa-tomato';
+    const criticIcon = movie.criticType === 'star' ? 'fa-star' : 'fa-tomato';
+    
+    return `
+      <div class="movie-card" data-id="${movie.id}" data-title="${movie.title.toLowerCase()}" data-year="${movie.year}" data-imdb="${movie.imdb}" data-tomato="${movie.tomato}">
+        <div class="poster">
+          <img src="${movie.poster}" alt="${movie.title}" loading="lazy">
+        </div>
+        <div class="movie-info">
+          <div class="movie-title">
+            ${movie.title}
+            <span class="movie-year">${movie.year}</span>
+          </div>
+          <div class="movie-meta">
+            <div class="score-group">
+              <span class="score-imdb"><i class="fas fa-star"></i> ${movie.imdb}</span>
+              <span class="score-tomato ${tomatoClass}"><i class="fas ${tomatoIcon}"></i> ${movie.tomato}%</span>
+            </div>
+            <span class="critic-badge"><i class="fas ${criticIcon}"></i> ${movie.critic}</span>
+          </div>
+          <div class="movie-desc">${movie.description}</div>
+          <div class="movie-extra">
+            <span><i class="far fa-clock"></i> ${movie.duration}</span>
+            <span><i class="fas fa-tag"></i> ${movie.genre}</span>
+            <span class="cert">${movie.cert}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Função para renderizar filmes com base nos filtros
+  function renderMovies() {
+    const searchTerm = currentSearch.toLowerCase().trim();
+    
+    // Filtrar filmes
+    let filteredMovies = movies.filter(movie => {
+      // Filtro de pesquisa
+      if (searchTerm && !movie.title.toLowerCase().includes(searchTerm)) {
+        return false;
+      }
+      
+      // Filtros das abas
+      if (currentFilter === 'imdb') {
+        return movie.imdb >= 8.0;
+      }
+      if (currentFilter === 'tomato') {
+        return movie.tomato >= 90;
+      }
+      if (currentFilter === 'year') {
+        return movie.year === 2024;
+      }
+      return true;
+    });
+
+    // Limpar grid
+    grid.innerHTML = '';
+
+    // Mostrar ou esconder mensagem de "nenhum resultado"
+    if (filteredMovies.length === 0) {
+      noResults.classList.add('show');
+    } else {
+      noResults.classList.remove('show');
+    }
+
+    // Adicionar filmes ao grid
+    filteredMovies.forEach(movie => {
+      grid.innerHTML += createMovieCard(movie);
+    });
+  }
+
+  // Evento de pesquisa
+  searchInput.addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    renderMovies();
+  });
+
+  // Eventos das abas
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remover classe active de todas as abas
+      tabs.forEach(t => t.classList.remove('active'));
+      // Adicionar à aba clicada
+      tab.classList.add('active');
+      
+      // Atualizar filtro
+      currentFilter = tab.dataset.filter;
+      renderMovies();
+    });
+  });
+
+  // Renderizar inicial
+  renderMovies();
+</script>
+
 </body>
 </html>
